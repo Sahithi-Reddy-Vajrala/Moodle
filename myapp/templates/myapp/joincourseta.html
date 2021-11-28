@@ -1,0 +1,15 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <br>
+    <h3>Join with a code as a Ta</h3>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="code">Code:   </label>
+        <input id="code" type="text" name="code" value="{{ code }}">
+        <input type="submit" value="OK">
+    </form>
+
+{% endblock %}

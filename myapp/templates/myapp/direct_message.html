@@ -1,0 +1,40 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<h3 style="color: darkblue;text-align: center;">SEND MESSAGE</h3><br>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <ul>
+        
+        <li style="color: navy;font-size: large;"> To     :  {{form.to_user}}</li>
+        <br>
+        <li style="color: navy;font-size: large;"> Comment: {{form.what_mess}}</li>
+        <br>
+        
+    </ul>
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Recieved Messages</h3>
+{% for message in to_message%}
+
+<h4 style="color: forestgreen;"> message from {{message.fromuser}}</h4>
+<p> message : {{message.what_mess}}</p>
+
+{% endfor %}
+
+
+
+<h3 >Sent Messages</h3>
+{% for message in your_message%}
+
+<h4 style="color: forestgreen;" > message to {{message.to_user}}</h4>
+<p> message : {{message.what_mess}}</p>
+
+{% endfor %}
+
+
+
+{% endblock %}

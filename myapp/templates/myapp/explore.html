@@ -1,0 +1,41 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h3>Teacher: {{ course.user.username }}</h3>
+<br>
+<h3> TA:</h3>
+<ol>
+    {% for u in course.ta.all %}
+    {% if u is not course.user%}
+    <li>{{ u.username }}</li>
+    {% endif %}
+    {% endfor %}
+</ol>
+<h3> Students:</h3>
+<ol>
+    {% for u in course.users_enrolled.all %}
+    {% if not u == course.user  %}
+    {% if u not in course.ta.all %}
+    <li>{{ u.username }}</li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+</ol>
+
+
+<h3>Other Users:</h3>
+<ol>
+    {% for u in usersall %}
+    {% if not u == course.user  %}
+    {% if u not in course.ta.all and u not in course.users_enrolled.all %}
+    <li>{{ u.username }} 
+        <a href="{% url 'invitestudent' course.id u.id %}" class="btn" style="color: white; background-color:orangered;"type="submit" id="header-links">Invite as Student</a>
+        <a href="{% url 'inviteta' course.id u.id %}" class="btn" style="color: white; background-color:orangered;"type="submit" id="header-links">Invite for the TA role</a><br>
+    </li> 
+
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+</ol>
+{% endblock %}

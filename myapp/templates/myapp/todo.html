@@ -1,0 +1,16 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if user not in course.ta.all %}
+<h2>Assignments yet to be done</h2>
+{% else %}
+<h2>Assignments not yet graded</h2>
+{% endif %}
+{% for i in required %}
+<ol>
+    <li><a href = "{% url 'viewAssignment' i.id %}" class="btn" style="color: white; background-color:blue;"type="submit"; id="header-links" >{{i.title}}</a> </li>
+</ol>
+{% endfor %}
+
+{% endblock %}

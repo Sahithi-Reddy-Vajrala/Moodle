@@ -1,0 +1,15 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<h3 style="color: indigo;">Course Creation </h3>
+<br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <p style="color: navy;font-size: large;">Course Name :  {{form.course_name}}</p>
+        <p style="color: navy;font-size: large;">Ta Code :  {{form.codeta}}</p>
+        <p style="color: navy;font-size: large;">Student Code :  {{form.codestudent}}</p>
+        <input type="submit" style="margin-left: 10%;color: green;" value="SUBMIT">
+    </form>
+
+{% endblock %}

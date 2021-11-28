@@ -1,0 +1,58 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+        <h1 style="font-family: sans-serif;">{{course.course_name}}</h1>
+        <p>Course Total: {{ coursetotal }}  </p>
+        <p> Percentage of course covered so far: {{percentage}} %</p>
+        {% if user == course.user%}
+        <img src="{% static 'myapp/course.jpg' %}"  alt=" "  width="500" height="400">
+        <p>statistics of Assignment</p>
+        <p>Class Average : {{meanformeanper}} %</p>
+        <p>Variance: {{varformeanper}} %</p>
+        <a href = "{% url 'todo' course.id %}" class="btn" style="color: white; background-color:blue;"type="submit"; id="header-links" > Todo List</a> 
+        {% endif %}
+        {% if user == course.user %}
+        <a href="{% url 'explore' course.id %}"class="btn" style="color: white; background-color:salmon;"type="submit"; id="header-links" >Explore</a>
+    
+        
+       <br>
+	   
+    	    <h3 style="color: black;text-align: left;text-shadow: 2px 2px 5px red;">Existing assignments</h5>
+            <ul>
+        	{% for a in assignments %}
+  		<br>
+  		<li><a href = "{% url 'viewAssignment' a.id %}" class="btn" style="color: white; background-color:blue;"type="submit"; id="header-links" > {{a.title}}</a> </li> 
+  		{% endfor %}
+	   </ul>
+       <br>
+	   <a href="{% url 'addassignment' course.id %}"class="btn" style="color: white; background-color:salmon;"type="submit"; id="header-links" >add new assignment</a>
+    {% endif %}   
+    <br><br>
+    {% ifequal course.creater_disable "F" %}
+    <h2> Disscussion Thread</h2>
+    {% for dis in discussions.all %} 
+    <a href="{%url 'discthread' dis.id %} "class="btn" style="color: white; background-color:green;"type="submit"; id="header-links" >Thread {{dis.id}}</a>
+    <br><br>
+    {% endfor %}
+    <a href="{%url 'adddiscthread' course.id %} "class="btn" style="color: white; background-color:green;"type="submit"; id="header-links" >Add Discussion Thread</a>
+    {% endifequal %}
+
+
+
+<br><br>
+     <h3 style="color: darkblue;">DISABLE CHAT</h3><br>
+    <h4 style="color: darkviolet;">   current : {{course.creater_disable}}</h4>
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+     <ul>   
+        <li style="color: navy;font-size: large;"> DISABLE: {{form_1.creater_disable}}</li>
+            
+        
+    </ul>
+            <input type="submit" value="Submit">
+            <p>      Enter T to Disable chat </p>
+            <p>      Enter F to Enable chat  </p>
+    </form>
+{% endblock %}

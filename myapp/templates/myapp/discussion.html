@@ -1,0 +1,11 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Discussion Forum: {{ discussion.id }}</h2>
+{% for i in comments %}
+<h3>{{i.commentor_name}}:  </h3><p>{{i.comment_body}}</p>
+<p>Posted at {{ i.date_added }}</p>
+{% endfor %}
+<a href="{%url 'addcomment' discussion.id %} "class="btn" style="color: white; background-color:green;"type="submit"; id="header-links" >Add Comment</a>   
+{% endblock %}
